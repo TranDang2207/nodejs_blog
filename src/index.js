@@ -7,8 +7,9 @@ const morgan = require("morgan");
 const app = express();
 const port = 3000;
 const route = require("./routes/web");
-const db = require("./config/database");
 const methodOverride = require("method-override");
+const sortMiddleware = require("./app/middlewares/SortMiddleware");
+const db = require("./config/database");
 db.connect();
 
 // Use to request form with PUT, PATCH, DELETE method
@@ -16,6 +17,9 @@ app.use(methodOverride("_method"));
 
 // Use static folder
 app.use(express.static(path.join(__dirname, "public")));
+
+// Custom middleware global
+app.use(sortMiddleware);
 
 // HTTP logger
 // app.use(morgan("combined"));
@@ -27,6 +31,26 @@ app.engine(
         extname: ".hbs",
         helpers: {
             sum: (a, b) => a + b,
+            sortable: (column, sort) => {
+                const sortType = column === sort.column ? sort.type : 'default'
+                const icons = {
+                    default: "bi bi-chevron-expand",
+                    asc: "bi bi-sort-down",
+                    desc: "bi bi-sort-up",
+                };
+                const types = {
+                    default: "desc",
+                    asc: "desc",
+                    desc: "asc",
+                };
+
+                const icon = icons[sortType];
+                const type = types[sort.type];
+
+                return `<a href="?_sort&column=${column}&type=${type}">
+                            <i class="${icon} text-dark"></i>
+                        </a>`;
+            },
         },
     })
 );

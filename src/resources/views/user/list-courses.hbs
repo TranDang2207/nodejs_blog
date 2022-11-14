@@ -22,10 +22,14 @@
                 </th>
                 <th scope="col">#</th>
                 <th scope="col">Course Name
-                    <a href="?_sort&column=name&type=desc"><i class="bi bi-chevron-expand text-dark"></i></a>
+                    {{{ sortable "name" _sort }}}
                 </th>
-                <th scope="col">Level</th>
-                <th scope="col">Created At</th>
+                <th scope="col">Level
+                    {{{ sortable "level" _sort }}}
+                </th>
+                <th scope="col">Created At
+                    {{{ sortable "createdAt" _sort }}}
+                </th>
                 <th scope="col" class="text-center">Actions</th>
             </tr>
         </thead>

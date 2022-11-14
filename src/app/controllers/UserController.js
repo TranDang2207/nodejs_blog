@@ -6,9 +6,9 @@ class UserController {
     listCourses(req, res, next) {
         let courseQuery = Course.find({});
 
-        if (req.query.hasOwnProperty("_sort")) {
+        if (res.locals._sort.enabled) {
             courseQuery = courseQuery.sort({
-                [req.query.column]: req.query.type,
+                [res.locals._sort.column]: res.locals._sort.type,
             });
         }
 
