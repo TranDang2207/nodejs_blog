@@ -20,7 +20,10 @@
                 <th scope="col">
                     <input class="" type="checkbox" value="" id="checkbox-all">
                 </th>
-                <th scope="col">#</th>
+                <th scope="col">
+                    #ID
+                    {{{ sortable "_id" _sort }}}
+                </th>
                 <th scope="col">Course Name
                     {{{ sortable "name" _sort }}}
                 </th>
@@ -37,7 +40,7 @@
             {{#each courses as |course|}}
             <tr>
                 <td><input class="bg-primary" type="checkbox" name="courseIds[]" value="{{ course._id }}"></td>
-                <th scope="row">{{ sum @index 1 }}</th>
+                <th scope="row">{{ course._id }}</th>
                 <td>{{ course.name }}</td>
                 <td>{{ course.level }}</td>
                 <td>{{ course.createdAt }}</td>
